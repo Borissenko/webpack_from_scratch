@@ -1,0 +1,8 @@
+// libs here, scss & css
+//css лучше подключать сюда, чем в main.css
+// see more: https://github.com/vedees/webpack-template/blob/master/README.md#import-only-sass-or-css-libs
+
+
+//example:
+//@import '../../../../node_modules/flickity/dist/flickity.css';
+//@import '../../../../node_modules/normalize/dist/normalize'; //.sccs не дописываем!

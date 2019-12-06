@@ -1,0 +1,34 @@
+// px to rem
+//FROM http://codepen.io/jellevezzijden/pen/xGYZYV
+//что бы не расчитывать, сколько rem надо указать, что бы в результате получить шрифт данного размера в px
+@function rem($pixels, $context: $mainFontSize) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+  @return $pixels / $context * 1rem;
+}
+//а в modul_3.scss пишем:
+//h1 {
+//  font-size: rem(20);
+//}
+//ввели 20px, он перерасчитался в rem относительно $mainFontSize и далее в @media будет работать как значение в rem
+
+
+@mixin size($width,$height: $width) {
+  width: $width;
+  height: $height;
+}
+//а в CSS пишем:
+//size(100%, 80%)
+//size(100%)
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  ::-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}
+}
+//placeholder(content)

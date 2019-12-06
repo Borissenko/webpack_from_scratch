@@ -9,7 +9,7 @@
 module.exports = {
   plugins: [
     require('autoprefixer'),
-    require('css-mqpacker'),  // медиа-запросы сжимает в один файл
+    require('css-mqpacker'),  // @media-запросы объединяет по размеру screen'a
     require('cssnano')({      //мимифицирует
       preset: [
         'default', {
