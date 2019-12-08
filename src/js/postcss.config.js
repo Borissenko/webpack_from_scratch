@@ -10,10 +10,10 @@ module.exports = {
   plugins: [
     require('autoprefixer'),
     require('css-mqpacker'),  // @media-запросы объединяет по размеру screen'a
-    require('cssnano')({      //мимифицирует
+    require('cssnano')({      //минифицирует css
       preset: [
         'default', {
-          discardComments: {
+          discardComments: {   //удаляет из css коментарии
             removeAll: true
           }
         }

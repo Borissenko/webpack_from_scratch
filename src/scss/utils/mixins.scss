@@ -1,5 +1,5 @@
 // px to rem
-//FROM http://codepen.io/jellevezzijden/pen/xGYZYV
+//from http://codepen.io/jellevezzijden/pen/xGYZYV
 //что бы не расчитывать, сколько rem надо указать, что бы в результате получить шрифт данного размера в px
 @function rem($pixels, $context: $mainFontSize) {
   @if (unitless($pixels)) {
@@ -21,7 +21,7 @@
   width: $width;
   height: $height;
 }
-//а в CSS пишем:
+//в CSS пишем:
 //size(100%, 80%)
 //size(100%)
 
@@ -31,4 +31,5 @@
   ::-moz-placeholder          {@content}
   :-ms-input-placeholder      {@content}
 }
+//в CSS пишем:
 //placeholder(content)
