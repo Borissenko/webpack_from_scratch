@@ -22,22 +22,22 @@ module.exports = {
   externals: {    //обеспечивает доступ к PATHS и в других файлах- в webpack.build.conf.js и webpack.dev.conf.js,
     paths: PATHS  //из них будем обращаться к PATHS with: const baseWebpackConfig = require('./webpack.base.conf'); baseWebpackConfig.externals.paths.dist
   },
-  entry: {          //app транслируется в [name] в output'e
+  entry: {          //app транслируется в [name] в output'e и в плагине MiniCssExtractPlugin.
     app: PATHS.src, //PATHS.src- это путь к ../src/index.js
     // module: `${PATHS.src}/your-module.js`,
   },
   output: {
-    filename: `${PATHS.assets}js/[name].js`,  //name = app et entry. If we have several entryPoint.
-    // filename: `${PATHS.assets}js/[name].[hash].js`,
+    filename: `${PATHS.assets}js/[name].[hash].js`,  //name = app et entry. If we have several entryPoint
+    // к имени файла добавляем [hash], что бы происходила пересборка и перезакачка клиенту при изменении кода этого файла
     path: PATHS.dist,
     publicPath: '/' //это для devServer, a baseURL для publicPath задаем by contentBase в webpack.base.conf.js
   },
   optimization: {
-    splitChunks: {
+    splitChunks: {  //для сборки библиотек и чистого проекта по разным файлам
       cacheGroups: {
         vendor: {
           name: 'vendors',
-          test: /node_modules/,
+          test: /node_modules/, //это регулярное выражение. Все из node_modules будет собираться в vendor.js
           chunks: 'all',
           enforce: true
         }
@@ -53,6 +53,14 @@ module.exports = {
       test: /\.vue$/,
       loader: 'vue-loader',
       options: {
+        loader: { //для использования scss в <style lang="scss" scoped> компонента
+          scss: 'vue-style-loader!css-loader!sass-loader'
+        }
+      }
+    }, {
+      test: /\.vue$/,
+      loader: 'vue-loader',
+      options: {
         loader: {
           scss: 'vue-style-loader!css-loader!sass-loader'
         }
@@ -64,7 +72,7 @@ module.exports = {
         name: '[name].[ext]'  //name- это app in entry, ext- это png
       }
     }, {
-      test: /\.scss$/,
+      test: /\.scss$/,  //в компоненте указываем <style lang="scss" scoped>
       use: [
         'style-loader',
         MiniCssExtractPlugin.loader,
@@ -96,7 +104,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.js' // что бы в index.js писать просто 'window.Vue = require('vue')'
     }
   },
   plugins: [
@@ -104,6 +112,9 @@ module.exports = {
     new MiniCssExtractPlugin({   //css будет собираться в файл, отдельный от js.
       filename: `${PATHS.assets}css/[name].[hash].css`, //путь для output (результата работы)
     }),
+    //к имени файла добавляем [hash], что бы происходила пересборка и перезакачка клиенту при изменении кода этого файла
+
+
     //Copy HtmlWebpackPlugin and change index.html for another html page
     //dist/index.html генерируется на основе src/index.html проекта.
     //доп-но, когда мы изменяем html-код проекта, он автоматически обнавляется в и сборке, и в броузере.
