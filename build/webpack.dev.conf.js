@@ -16,7 +16,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.SourceMapDevToolPlugin({  //для карты сайта. Иначе в main.scss подключаемые через @import файлы- не увидяться
-      filename: '[file].map'
+      filename: '[file].map'              //Теперь, если запустить дев разработку можно увидеть что на каждую строчку css кода выводится корректный scss файл!
     })
   ]
 })

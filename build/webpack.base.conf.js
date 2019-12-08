@@ -3,31 +3,34 @@
 //Можно это делать с использованием не webpack-merge, а используя ENV.
 
 const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin') //это плагин (функция), поэтому ее регистрируем в плагинах
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
-const PATHS = {  //это для удобства, если позже понадобиться менять путь к ../src и ../dist  ...
-  src: path.join(__dirname, '../src'),  //если обратиться просто src, то попадем ../src/index.js
-  dist: path.join(__dirname, '../dist'),
+const PATHS = {    //это для удобства, если позже понадобиться менять путь к ../src и ../dist  ...
+  src: path.join(__dirname, '../src'),  //если обратиться src/просто, то попадем ../src/index.js
+  dist: path.join(__dirname, '../dist'),  //при сборке создается папка dist
   assets: 'assets/' //изменив 'assets/' на 'static/' мы в dist при билде получим папку static
 }
+// ../src - это путь от данного файла, тюею от webpack.dev.conf.js
+// итого- мы выходим из build и обращаемся к src в корне проекта
+// Пути, которые мы прописываем в коде проекта, Нр: src="" у <img>, - это пути по папкам в отбилденном dist, а не по папкам проекта !!!!
+
 
 module.exports = {
-  // BASE config
-  externals: {    //обеспечивает доступ к PATHS и в других файлах- в webpack.build.conf.js и webpack.dev.conf.js
+  externals: {    //обеспечивает доступ к PATHS и в других файлах- в webpack.build.conf.js и webpack.dev.conf.js,
     paths: PATHS  //из них будем обращаться к PATHS with: const baseWebpackConfig = require('./webpack.base.conf'); baseWebpackConfig.externals.paths.dist
   },
-  entry: {
-    app: PATHS.src, //=>>../src/index.js
+  entry: {          //app транслируется в [name] в output'e
+    app: PATHS.src, //PATHS.src- это путь к ../src/index.js
     // module: `${PATHS.src}/your-module.js`,
   },
   output: {
-    filename: `${PATHS.assets}js/[name].js`,
+    filename: `${PATHS.assets}js/[name].js`,  //name = app et entry. If we have several entryPoint.
     // filename: `${PATHS.assets}js/[name].[hash].js`,
     path: PATHS.dist,
-    publicPath: '/' //это для devServer, baseURL для publicPath задаем by contentBase в webpack.base.conf.js
+    publicPath: '/' //это для devServer, a baseURL для publicPath задаем by contentBase в webpack.base.conf.js
   },
   optimization: {
     splitChunks: {
@@ -58,7 +61,7 @@ module.exports = {
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'file-loader',
       options: {
-        name: '[name].[ext]'
+        name: '[name].[ext]'  //name- это app in entry, ext- это png
       }
     }, {
       test: /\.scss$/,
@@ -98,18 +101,23 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({   //css будет собираться в отдельный от js файл
-      filename: `${PATHS.assets}css/[name].[hash].css`, //путь для output результата работы
+    new MiniCssExtractPlugin({   //css будет собираться в файл, отдельный от js.
+      filename: `${PATHS.assets}css/[name].[hash].css`, //путь для output (результата работы)
     }),
-    // Copy HtmlWebpackPlugin and change index.html for another html page
+    //Copy HtmlWebpackPlugin and change index.html for another html page
+    //dist/index.html генерируется на основе src/index.html проекта.
+    //доп-но, когда мы изменяем html-код проекта, он автоматически обнавляется в и сборке, и в броузере.
     new HtmlWebpackPlugin({
-      template: `${PATHS.src}/index.html`,
-      filename: './index.html',
+    // hash: false,
+      template: `${PATHS.src}/index.html`,  //какой html-файл копируем из src поекта
+      filename: './index.html',             //имя нового .html в dist'e
       inject: true
     }),
+    //подключая картинку в html-коде (<img src="/assets/img/vinny.png">)...
     new CopyWebpackPlugin([
-      { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` },
-      { from: `${PATHS.src}/static`, to: '' },
+      { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` }, //копируем СОДЕРЖИМОЕ img в проекте в dist/assets/img
+      { from: `${PATHS.src}/static`, to: '' },  //копируем СОДЕРЖИМОЕ static проекта в корень dist
     ])
+   // Пути, которые мы прописываем в коде проекта, Нр: src="" у <img>, - это пути по папкам в отбилденном dist, а не по папкам проекта !!!!
   ],
 }

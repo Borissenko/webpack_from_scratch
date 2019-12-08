@@ -3,11 +3,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')  //это пла
 
 module.exports = {
   entry: {
-    app: './src/index.js'  //app => [name]
+    app: './src/index.js'  //app => [name] in output
   },
   output: {
     filename: '[name].js', //name = app et entry. If we have several entryPoint
-    path: path.resolve(__dirname, './dist'),  //dist при run dev будет существовать только виртуально, не в проекте
+    path: path.resolve(__dirname, './dist'),  //dist при 'run dev' будет существовать только виртуально, не в проекте
     publicPath: '/dist'  // for devServer
   },
   module: {
