@@ -113,8 +113,9 @@ module.exports = {
       filename: './index.html',             //имя нового .html в dist'e
       inject: true
     }),
-    //подключая картинку в html-коде (<img src="/assets/img/vinny.png">)...
     new CopyWebpackPlugin([
+      //img- не JS-код, поэтому его надо копировать
+      //также файлы с расширением в ед экземпляре- легче скопировать, чем лоудить через module.rules
       { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` }, //копируем СОДЕРЖИМОЕ img в проекте в dist/assets/img
       { from: `${PATHS.src}/static`, to: '' },  //копируем СОДЕРЖИМОЕ static проекта в корень dist
     ])
