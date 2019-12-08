@@ -24,7 +24,7 @@ module.exports = {
   },
   entry: {          //app транслируется в [name] в output'e и в плагине MiniCssExtractPlugin.
     app: PATHS.src, //PATHS.src- это путь к ../src/index.js
-    // module: `${PATHS.src}/your-module.js`,
+    module: `${PATHS.src}/your_module.js`,  //вторая точка входа для редкообновляемой части проекта.
   },
   output: {
     filename: `${PATHS.assets}js/[name].[hash].js`,  //name = app et entry. If we have several entryPoint
@@ -114,7 +114,10 @@ module.exports = {
     // hash: false,
       template: `${PATHS.src}/index.html`,  //какой html-файл копируем из src поекта
       filename: './index.html',             //имя нового .html в dist'e
-      inject: true
+      inject: true  //если поставить false, то при билде в <head> у index.html не будет добавляться <linc> с хрефом на css-файл,
+      // его надо будет прописывать вручную в материнском index.html
+      //см. description часть C.
+      //см. https://webpack.js.org/plugins/html-webpack-plugin/
     }),
     new CopyWebpackPlugin([
       //img- не JS-код, поэтому его надо копировать
