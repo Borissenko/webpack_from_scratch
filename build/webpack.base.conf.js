@@ -53,14 +53,6 @@ module.exports = {
       test: /\.vue$/,
       loader: 'vue-loader',
       options: {
-        loader: { //для использования scss в <style lang="scss" scoped> компонента
-          scss: 'vue-style-loader!css-loader!sass-loader'
-        }
-      }
-    }, {
-      test: /\.vue$/,
-      loader: 'vue-loader',
-      options: {
         loader: {
           scss: 'vue-style-loader!css-loader!sass-loader'
         }
