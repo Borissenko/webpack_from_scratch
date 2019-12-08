@@ -1,6 +1,6 @@
 //сдесь мы разбили-объединяем webpack.config.js на основе webpack-merge,
 //base добавляем в dev и в build
-//Можно это делать с использованием ENV.
+//Можно это делать с использованием не webpack-merge, а используя ENV.
 
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -8,25 +8,26 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
-const PATHS = {
-  src: path.join(__dirname, '../src'),
+const PATHS = {  //это для удобства, если позже понадобиться менять путь к ../src и ../dist  ...
+  src: path.join(__dirname, '../src'),  //если обратиться просто src, то попадем ../src/index.js
   dist: path.join(__dirname, '../dist'),
-  assets: 'assets/'
+  assets: 'assets/' //изменив 'assets/' на 'static/' мы в dist при билде получим папку static
 }
 
 module.exports = {
   // BASE config
-  externals: {
-    paths: PATHS
+  externals: {    //обеспечивает доступ к PATHS и в других файлах- в webpack.build.conf.js и webpack.dev.conf.js
+    paths: PATHS  //из них будем обращаться к PATHS with: const baseWebpackConfig = require('./webpack.base.conf'); baseWebpackConfig.externals.paths.dist
   },
   entry: {
-    app: PATHS.src,
+    app: PATHS.src, //=>>../src/index.js
     // module: `${PATHS.src}/your-module.js`,
   },
   output: {
-    filename: `${PATHS.assets}js/[name].[hash].js`,
+    filename: `${PATHS.assets}js/[name].js`,
+    // filename: `${PATHS.assets}js/[name].[hash].js`,
     path: PATHS.dist,
-    publicPath: '/'
+    publicPath: '/' //это для devServer, baseURL для publicPath задаем by contentBase в webpack.base.conf.js
   },
   optimization: {
     splitChunks: {
@@ -97,8 +98,8 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: `${PATHS.assets}css/[name].[hash].css`,
+    new MiniCssExtractPlugin({   //css будет собираться в отдельный от js файл
+      filename: `${PATHS.assets}css/[name].[hash].css`, //путь для output результата работы
     }),
     // Copy HtmlWebpackPlugin and change index.html for another html page
     new HtmlWebpackPlugin({
