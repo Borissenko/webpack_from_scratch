@@ -80,7 +80,7 @@ module.exports = {
           options: { sourceMap: true }
         }, {
           loader: 'postcss-loader',
-          options: { sourceMap: true, config: { path: `${PATHS.src}/js/new_postcss.config.js` } }
+          options: { sourceMap: true, config: { path: `./postcss.config.js` } }
         }, {
           loader: 'sass-loader',
           options: { sourceMap: true }
@@ -96,14 +96,16 @@ module.exports = {
           options: { sourceMap: true }
         }, {
           loader: 'postcss-loader',
-          options: { sourceMap: true, config: { path: `${PATHS.src}/js/new_postcss.config.js` } }
+          options: { sourceMap: true, config: { path: `./postcss.config.js` } }
         }
       ]
     }]
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.js' // что бы в index.js писать просто 'window.Vue = require('vue')'
+      'vue$': 'vue/dist/vue.js', // что бы в index.js писать просто 'window.Vue = require('vue')'
+      '@': 'src',
+      '~': 'src'
     }
   },
   plugins: [
@@ -129,8 +131,8 @@ module.exports = {
     new CopyWebpackPlugin([
       //img- не JS-код, поэтому его надо копировать
       //также файлы с расширением в ед экземпляре- легче скопировать, чем лоудить через module.rules
-      { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` }, //копируем СОДЕРЖИМОЕ img в проекте в dist/assets/img
-      { from: `${PATHS.src}/ fonts`, to: `${PATHS.assets}fonts` },
+      { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` }, //копируем СОДЕРЖИМОЕ img в проекте в dist/assets/img
+      { from: `${PATHS.src}/assets/fonts`, to: `${PATHS.assets}fonts` },
       // { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
       { from: `${PATHS.src}/static`, to: '' },  //копируем СОДЕРЖИМОЕ static проекта в корень dist
     ])
