@@ -58,10 +58,17 @@ module.exports = {
         }
       }
     }, {
+      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]'  //name- это app in entry, ext- это woff
+      }
+    }, {
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'file-loader',
       options: {
         name: '[name].[ext]'  //name- это app in entry, ext- это png
+        //если картинки мы часто будем менять, то к имени тоже можно добавить .[hash]
       }
     }, {
       test: /\.scss$/,  //в компоненте указываем <style lang="scss" scoped>
@@ -123,6 +130,8 @@ module.exports = {
       //img- не JS-код, поэтому его надо копировать
       //также файлы с расширением в ед экземпляре- легче скопировать, чем лоудить через module.rules
       { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` }, //копируем СОДЕРЖИМОЕ img в проекте в dist/assets/img
+      { from: `${PATHS.src}/ fonts`, to: `${PATHS.assets}fonts` },
+      // { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
       { from: `${PATHS.src}/static`, to: '' },  //копируем СОДЕРЖИМОЕ static проекта в корень dist
     ])
    // Пути, которые мы прописываем в коде проекта, Нр: src="" у <img>, - это пути по папкам в отбилденном dist, а не по папкам проекта !!!!

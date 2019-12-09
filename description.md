@@ -53,5 +53,11 @@ C)
 см. https://webpack.js.org/plugins/html-webpack-plugin/
 
 
+лек 5 Подключение шрифтов
+заявляем в module.rules и в plagins.newCopyWebpackPlugin()
+прописываем @font-face в fonts.scss
+создаем переменную $secondFont для нового шрифта в vars.scss
+используем переменную в описании css-класса
+
 
 

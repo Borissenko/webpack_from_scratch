@@ -1,2 +1,21 @@
 // Fonts here
 // see more: https://github.com/vedees/webpack-template/blob/master/README.md#import-js-files
+
+@font-face {
+  font-family: "HelveticaNeue-CondensedBlack";
+  src: url('/assets/fonts/HelveticaNeue-CondensedBlack/HelveticaNeue-CondensedBlack.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/HelveticaNeue-CondensedBlack/HelveticaNeue-CondensedBlack.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/assets/fonts/HelveticaNeue-CondensedBlack/HelveticaNeue-CondensedBlack.woff') format('woff'), /* Pretty Modern Browsers */
+  url('/assets/fonts/HelveticaNeue-CondensedBlack/HelveticaNeue-CondensedBlack.ttf')  format('truetype'), /* Safari, Android, iOS */
+  url('/assets/fonts/HelveticaNeue-CondensedBlack/HelveticaNeue-CondensedBlack.svg') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: "HelveticaNeueCyr-Black";
+  src: url('/assets/fonts/HelveticaNeueCyr/Black/HelveticaNeueCyr-Black.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/HelveticaNeueCyr/Black/HelveticaNeueCyr-Black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/assets/fonts/HelveticaNeueCyr/Black/HelveticaNeueCyr-Black.woff') format('woff'), /* Pretty Modern Browsers */
+  url('/assets/fonts/HelveticaNeueCyr/Black/HelveticaNeueCyr-Black.ttf')  format('truetype'), /* Safari, Android, iOS */
+  //  url('/assets/fonts/HelveticaNeueCyr/Black/HelveticaNeueCyr-Black.svg') format('svg'); /* Legacy iOS */
+}
+//это пути в папке dist, а не в проекте!
